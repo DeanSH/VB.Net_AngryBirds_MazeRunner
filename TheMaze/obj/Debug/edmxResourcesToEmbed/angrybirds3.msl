@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="angrybirds3ModelStoreContainer" CdmEntityContainer="angrybirds3Entities">
+    <EntitySetMapping Name="characters">
+      <EntityTypeMapping TypeName="angrybirds3Model.character">
+        <MappingFragment StoreEntitySet="character">
+          <ScalarProperty Name="char_id" ColumnName="char_id" />
+          <ScalarProperty Name="char_name" ColumnName="char_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="games">
+      <EntityTypeMapping TypeName="angrybirds3Model.game">
+        <MappingFragment StoreEntitySet="game">
+          <ScalarProperty Name="gameid" ColumnName="gameid" />
+          <ScalarProperty Name="mapname" ColumnName="mapname" />
+          <ScalarProperty Name="layout" ColumnName="layout" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gameobjects">
+      <EntityTypeMapping TypeName="angrybirds3Model.gameobject">
+        <MappingFragment StoreEntitySet="gameobject">
+          <ScalarProperty Name="gameid" ColumnName="gameid" />
+          <ScalarProperty Name="obj_id" ColumnName="obj_id" />
+          <ScalarProperty Name="obj_xy" ColumnName="obj_xy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="gameplayers">
+      <EntityTypeMapping TypeName="angrybirds3Model.gameplayer">
+        <MappingFragment StoreEntitySet="gameplayer">
+          <ScalarProperty Name="gameid" ColumnName="gameid" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="char_id" ColumnName="char_id" />
+          <ScalarProperty Name="xypoint" ColumnName="xypoint" />
+          <ScalarProperty Name="score" ColumnName="score" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="maps">
+      <EntityTypeMapping TypeName="angrybirds3Model.map">
+        <MappingFragment StoreEntitySet="map">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="mapname" ColumnName="mapname" />
+          <ScalarProperty Name="layout" ColumnName="layout" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="objects">
+      <EntityTypeMapping TypeName="angrybirds3Model.object">
+        <MappingFragment StoreEntitySet="object">
+          <ScalarProperty Name="obj_id" ColumnName="obj_id" />
+          <ScalarProperty Name="obj_type" ColumnName="obj_type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="players">
+      <EntityTypeMapping TypeName="angrybirds3Model.player">
+        <MappingFragment StoreEntitySet="player">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="passwrd" ColumnName="passwrd" />
+          <ScalarProperty Name="admin" ColumnName="admin" />
+          <ScalarProperty Name="attempts" ColumnName="attempts" />
+          <ScalarProperty Name="locked" ColumnName="locked" />
+          <ScalarProperty Name="highscore" ColumnName="highscore" />
+          <ScalarProperty Name="isonline" ColumnName="isonline" />
+          <ScalarProperty Name="lastlogin" ColumnName="lastlogin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActiveGames">
+      <EntityTypeMapping TypeName="angrybirds3Model.ActiveGame">
+        <MappingFragment StoreEntitySet="ActiveGames">
+          <ScalarProperty Name="HOST" ColumnName="HOST" />
+          <ScalarProperty Name="MAZE" ColumnName="MAZE" />
+          <ScalarProperty Name="PLAYERS" ColumnName="PLAYERS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MapNames">
+      <EntityTypeMapping TypeName="angrybirds3Model.MapName">
+        <MappingFragment StoreEntitySet="MapNames">
+          <ScalarProperty Name="MAZE" ColumnName="MAZE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OnlinePlayers">
+      <EntityTypeMapping TypeName="angrybirds3Model.OnlinePlayer">
+        <MappingFragment StoreEntitySet="OnlinePlayers">
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="highscore" ColumnName="highscore" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Top10">
+      <EntityTypeMapping TypeName="angrybirds3Model.Top10">
+        <MappingFragment StoreEntitySet="Top10">
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="highscore" ColumnName="highscore" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddGameObject" FunctionName="angrybirds3Model.Store.AddGameObject" />
+    <FunctionImportMapping FunctionImportName="AddGamePlayer" FunctionName="angrybirds3Model.Store.AddGamePlayer" />
+    <FunctionImportMapping FunctionImportName="AddGameSession" FunctionName="angrybirds3Model.Store.AddGameSession" />
+    <FunctionImportMapping FunctionImportName="AddUpdateMap" FunctionName="angrybirds3Model.Store.AddUpdateMap" />
+    <FunctionImportMapping FunctionImportName="AddUser" FunctionName="angrybirds3Model.Store.AddUser" />
+    <FunctionImportMapping FunctionImportName="ChangePassword" FunctionName="angrybirds3Model.Store.ChangePassword" />
+    <FunctionImportMapping FunctionImportName="CheckGameHasPlayers" FunctionName="angrybirds3Model.Store.CheckGameHasPlayers" />
+    <FunctionImportMapping FunctionImportName="CheckHighScore" FunctionName="angrybirds3Model.Store.CheckHighScore" />
+    <FunctionImportMapping FunctionImportName="CheckMapNameExists" FunctionName="angrybirds3Model.Store.CheckMapNameExists" />
+    <FunctionImportMapping FunctionImportName="CheckOnlineStatus" FunctionName="angrybirds3Model.Store.CheckOnlineStatus" />
+    <FunctionImportMapping FunctionImportName="DeletePlayer" FunctionName="angrybirds3Model.Store.DeletePlayer" />
+    <FunctionImportMapping FunctionImportName="GetActiveGames" FunctionName="angrybirds3Model.Store.GetActiveGames" />
+    <FunctionImportMapping FunctionImportName="GetCharacterList" FunctionName="angrybirds3Model.Store.GetCharacterList" />
+    <FunctionImportMapping FunctionImportName="GetGameObjectStats" FunctionName="angrybirds3Model.Store.GetGameObjectStats" />
+    <FunctionImportMapping FunctionImportName="GetGamePlayerStats" FunctionName="angrybirds3Model.Store.GetGamePlayerStats" />
+    <FunctionImportMapping FunctionImportName="GetGamePlayerTable" FunctionName="angrybirds3Model.Store.GetGamePlayerTable" />
+    <FunctionImportMapping FunctionImportName="GetGameTable" FunctionName="angrybirds3Model.Store.GetGameTable" />
+    <FunctionImportMapping FunctionImportName="GetMapNames" FunctionName="angrybirds3Model.Store.GetMapNames" />
+    <FunctionImportMapping FunctionImportName="GetObjectList" FunctionName="angrybirds3Model.Store.GetObjectList" />
+    <FunctionImportMapping FunctionImportName="GetOnlinePlayers" FunctionName="angrybirds3Model.Store.GetOnlinePlayers" />
+    <FunctionImportMapping FunctionImportName="GetPlayerMapInfo" FunctionName="angrybirds3Model.Store.GetPlayerMapInfo" />
+    <FunctionImportMapping FunctionImportName="GetPlayerTable" FunctionName="angrybirds3Model.Store.GetPlayerTable" />
+    <FunctionImportMapping FunctionImportName="GetTop10HighScores" FunctionName="angrybirds3Model.Store.GetTop10HighScores" />
+    <FunctionImportMapping FunctionImportName="IncreasePlayerScore" FunctionName="angrybirds3Model.Store.IncreasePlayerScore" />
+    <FunctionImportMapping FunctionImportName="LoginUser" FunctionName="angrybirds3Model.Store.LoginUser" />
+    <FunctionImportMapping FunctionImportName="LogoutUser" FunctionName="angrybirds3Model.Store.LogoutUser" />
+    <FunctionImportMapping FunctionImportName="RemoveGame" FunctionName="angrybirds3Model.Store.RemoveGame" />
+    <FunctionImportMapping FunctionImportName="RemoveGamePlayer" FunctionName="angrybirds3Model.Store.RemoveGamePlayer" />
+    <FunctionImportMapping FunctionImportName="SetAdminStatus" FunctionName="angrybirds3Model.Store.SetAdminStatus" />
+    <FunctionImportMapping FunctionImportName="SetGameObjPosition" FunctionName="angrybirds3Model.Store.SetGameObjPosition" />
+    <FunctionImportMapping FunctionImportName="SetGamePlayerPosition" FunctionName="angrybirds3Model.Store.SetGamePlayerPosition" />
+    <FunctionImportMapping FunctionImportName="SetGamePlayerScore" FunctionName="angrybirds3Model.Store.SetGamePlayerScore" />
+    <FunctionImportMapping FunctionImportName="SetLockedStatus" FunctionName="angrybirds3Model.Store.SetLockedStatus" />
+    <FunctionImportMapping FunctionImportName="UpdateHighScore" FunctionName="angrybirds3Model.Store.UpdateHighScore" />
+    <EntitySetMapping Name="GamePlayerStats">
+      <EntityTypeMapping TypeName="angrybirds3Model.GamePlayerStat">
+        <MappingFragment StoreEntitySet="GamePlayerStats">
+          <ScalarProperty Name="score" ColumnName="score" />
+          <ScalarProperty Name="xypoint" ColumnName="xypoint" />
+          <ScalarProperty Name="char_name" ColumnName="char_name" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="gameid" ColumnName="gameid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

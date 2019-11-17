@@ -1,0 +1,16 @@
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\TheMaze.vbprojResolveAssemblyReference.cache
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\TheMaze.vbproj.GenerateResource.Cache
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\bin\Debug\AngryBirds3.exe.config
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\bin\Debug\AngryBirds3.exe
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\bin\Debug\AngryBirds3.pdb
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\bin\Debug\AngryBirds3.xml
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\AngryBirds3.MainFrm.resources
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\AngryBirds3.Resources.resources
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\AngryBirds3.exe
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\AngryBirds3.xml
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\AngryBirds3.pdb
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\bin\Debug\AngryBirds3.exe.manifest
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\bin\Debug\AngryBirds3.application
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\AngryBirds3.exe.manifest
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\AngryBirds3.application
+C:\Users\R4\Desktop\AmazingMaze\VB\TheMaze\obj\Debug\AngryBirds3.settings.resources

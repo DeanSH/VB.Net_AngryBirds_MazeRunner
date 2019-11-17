@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="angrybirds3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="character">
+    <Key>
+      <PropertyRef Name="char_id" />
+    </Key>
+    <Property Name="char_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="char_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="gameplayers" Relationship="Self.gameplayer_ibfk_3" FromRole="character" ToRole="gameplayer" />
+  </EntityType>
+  <EntityType Name="game">
+    <Key>
+      <PropertyRef Name="gameid" />
+    </Key>
+    <Property Name="gameid" Type="Int32" Nullable="false" />
+    <Property Name="mapname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="layout" Type="String" MaxLength="840" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="gameobject">
+    <Key>
+      <PropertyRef Name="gameid" />
+      <PropertyRef Name="obj_id" />
+    </Key>
+    <Property Name="gameid" Type="Int32" Nullable="false" />
+    <Property Name="obj_id" Type="Int32" Nullable="false" />
+    <Property Name="obj_xy" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="gameplayer">
+    <Key>
+      <PropertyRef Name="gameid" />
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="gameid" Type="Int32" Nullable="false" />
+    <Property Name="userid" Type="Int32" Nullable="false" />
+    <Property Name="char_id" Type="Int32" Nullable="false" />
+    <Property Name="xypoint" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="score" Type="Int32" />
+  </EntityType>
+  <EntityType Name="map">
+    <Key>
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="userid" Type="Int32" Nullable="false" />
+    <Property Name="mapname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="layout" Type="String" MaxLength="840" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="object">
+    <Key>
+      <PropertyRef Name="obj_id" />
+    </Key>
+    <Property Name="obj_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="obj_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="gameobjects" Relationship="Self.gameobject_ibfk_2" FromRole="object" ToRole="gameobject" />
+  </EntityType>
+  <EntityType Name="player">
+    <Key>
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="passwrd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="admin" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="attempts" Type="Int32" />
+    <Property Name="locked" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="highscore" Type="Int32" />
+    <Property Name="isonline" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="lastlogin" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ActiveGame">
+    <Key>
+      <PropertyRef Name="HOST" />
+      <PropertyRef Name="MAZE" />
+    </Key>
+    <Property Name="HOST" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MAZE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PLAYERS" Type="Int64" />
+  </EntityType>
+  <EntityType Name="MapName">
+    <Key>
+      <PropertyRef Name="MAZE" />
+    </Key>
+    <Property Name="MAZE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OnlinePlayer">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="highscore" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Top10">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="highscore" Type="Int32" />
+  </EntityType>
+  <Association Name="gameplayer_ibfk_3">
+    <End Role="character" Type="Self.character" Multiplicity="1" />
+    <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="character">
+        <PropertyRef Name="char_id" />
+      </Principal>
+      <Dependent Role="gameplayer">
+        <PropertyRef Name="char_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="game_ibfk_1">
+    <End Role="player" Type="Self.player" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="game" Type="Self.game" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="player">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="game">
+        <PropertyRef Name="gameid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="gameobject_ibfk_1">
+    <End Role="game" Type="Self.game" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="gameobject" Type="Self.gameobject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="game">
+        <PropertyRef Name="gameid" />
+      </Principal>
+      <Dependent Role="gameobject">
+        <PropertyRef Name="gameid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="gameplayer_ibfk_1">
+    <End Role="game" Type="Self.game" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="game">
+        <PropertyRef Name="gameid" />
+      </Principal>
+      <Dependent Role="gameplayer">
+        <PropertyRef Name="gameid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="gameobject_ibfk_2">
+    <End Role="object" Type="Self.object" Multiplicity="1" />
+    <End Role="gameobject" Type="Self.gameobject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="object">
+        <PropertyRef Name="obj_id" />
+      </Principal>
+      <Dependent Role="gameobject">
+        <PropertyRef Name="obj_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="gameplayer_ibfk_2">
+    <End Role="player" Type="Self.player" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="player">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="gameplayer">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="map_ibfk_1">
+    <End Role="player" Type="Self.player" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="map" Type="Self.map" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="player">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="map">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="angrybirds3Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="characters" EntityType="Self.character" />
+    <EntitySet Name="games" EntityType="Self.game" />
+    <EntitySet Name="gameobjects" EntityType="Self.gameobject" />
+    <EntitySet Name="gameplayers" EntityType="Self.gameplayer" />
+    <EntitySet Name="maps" EntityType="Self.map" />
+    <EntitySet Name="objects" EntityType="Self.object" />
+    <EntitySet Name="players" EntityType="Self.player" />
+    <EntitySet Name="ActiveGames" EntityType="Self.ActiveGame" />
+    <EntitySet Name="MapNames" EntityType="Self.MapName" />
+    <EntitySet Name="OnlinePlayers" EntityType="Self.OnlinePlayer" />
+    <EntitySet Name="Top10" EntityType="Self.Top10" />
+    <AssociationSet Name="gameplayer_ibfk_3" Association="Self.gameplayer_ibfk_3">
+      <End Role="character" EntitySet="characters" />
+      <End Role="gameplayer" EntitySet="gameplayers" />
+    </AssociationSet>
+    <AssociationSet Name="game_ibfk_1" Association="Self.game_ibfk_1">
+      <End Role="player" EntitySet="players" />
+      <End Role="game" EntitySet="games" />
+    </AssociationSet>
+    <AssociationSet Name="gameobject_ibfk_1" Association="Self.gameobject_ibfk_1">
+      <End Role="game" EntitySet="games" />
+      <End Role="gameobject" EntitySet="gameobjects" />
+    </AssociationSet>
+    <AssociationSet Name="gameplayer_ibfk_1" Association="Self.gameplayer_ibfk_1">
+      <End Role="game" EntitySet="games" />
+      <End Role="gameplayer" EntitySet="gameplayers" />
+    </AssociationSet>
+    <AssociationSet Name="gameobject_ibfk_2" Association="Self.gameobject_ibfk_2">
+      <End Role="object" EntitySet="objects" />
+      <End Role="gameobject" EntitySet="gameobjects" />
+    </AssociationSet>
+    <AssociationSet Name="gameplayer_ibfk_2" Association="Self.gameplayer_ibfk_2">
+      <End Role="player" EntitySet="players" />
+      <End Role="gameplayer" EntitySet="gameplayers" />
+    </AssociationSet>
+    <AssociationSet Name="map_ibfk_1" Association="Self.map_ibfk_1">
+      <End Role="player" EntitySet="players" />
+      <End Role="map" EntitySet="maps" />
+    </AssociationSet>
+    <FunctionImport Name="AddGameObject" ReturnType="Collection(String)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+      <Parameter Name="pObjID" Mode="In" Type="Int32" />
+      <Parameter Name="pObjPos" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddGamePlayer" ReturnType="Collection(String)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pCharID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserPos" Mode="In" Type="String" />
+      <Parameter Name="pStartScore" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="AddGameSession" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pMapName" Mode="In" Type="String" />
+      <Parameter Name="pMapLayout" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddUpdateMap" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pMapName" Mode="In" Type="String" />
+      <Parameter Name="pMapLayout" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddUser" ReturnType="Collection(String)">
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+      <Parameter Name="pUserPass" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ChangePassword" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+      <Parameter Name="pNewPass" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckGameHasPlayers" ReturnType="Collection(String)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CheckHighScore" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+      <Parameter Name="pScore" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CheckMapNameExists" ReturnType="Collection(String)">
+      <Parameter Name="pMapName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CheckOnlineStatus" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeletePlayer" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetActiveGames" EntitySet="ActiveGames" ReturnType="Collection(angrybirds3Model.ActiveGame)" />
+    <FunctionImport Name="GetCharacterList" EntitySet="characters" ReturnType="Collection(angrybirds3Model.character)" />
+    <FunctionImport Name="GetGameObjectStats" EntitySet="gameobjects" ReturnType="Collection(angrybirds3Model.gameobject)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetGamePlayerStats" EntitySet="GamePlayerStats" ReturnType="Collection(angrybirds3Model.GamePlayerStat)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetGamePlayerTable" EntitySet="gameplayers" ReturnType="Collection(angrybirds3Model.gameplayer)" />
+    <FunctionImport Name="GetGameTable" EntitySet="games" ReturnType="Collection(angrybirds3Model.game)" />
+    <FunctionImport Name="GetMapNames" EntitySet="MapNames" ReturnType="Collection(angrybirds3Model.MapName)" />
+    <FunctionImport Name="GetObjectList" EntitySet="objects" ReturnType="Collection(angrybirds3Model.object)" />
+    <FunctionImport Name="GetOnlinePlayers" EntitySet="OnlinePlayers" ReturnType="Collection(angrybirds3Model.OnlinePlayer)" />
+    <FunctionImport Name="GetPlayerMapInfo" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pMapName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetPlayerTable" EntitySet="players" ReturnType="Collection(angrybirds3Model.player)" />
+    <FunctionImport Name="GetTop10HighScores" EntitySet="Top10" ReturnType="Collection(angrybirds3Model.Top10)" />
+    <FunctionImport Name="IncreasePlayerScore" ReturnType="Collection(String)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="LoginUser" ReturnType="Collection(String)">
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+      <Parameter Name="pUserPass" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LogoutUser" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="RemoveGame" ReturnType="Collection(String)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="RemoveGamePlayer" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SetAdminStatus" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+      <Parameter Name="pAdmin" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SetGameObjPosition" ReturnType="Collection(String)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+      <Parameter Name="pObjID" Mode="In" Type="Int32" />
+      <Parameter Name="pObjXY" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SetGamePlayerPosition" EntitySet="GamePlayerStats" ReturnType="Collection(angrybirds3Model.GamePlayerStat)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserXY" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SetGamePlayerScore" ReturnType="Collection(String)">
+      <Parameter Name="pGameID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pScore" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SetLockedStatus" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+      <Parameter Name="pLocked" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateHighScore" ReturnType="Collection(String)">
+      <Parameter Name="pUserID" Mode="In" Type="Int32" />
+      <Parameter Name="pUserName" Mode="In" Type="String" />
+      <Parameter Name="pScore" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="GamePlayerStats" EntityType="angrybirds3Model.GamePlayerStat" />
+  </EntityContainer>
+  <ComplexType Name="GetActiveGames_Result" />
+  <ComplexType Name="GetCharacterList_Result" />
+  <ComplexType Name="GetGamePlayerStats_Result" />
+  <ComplexType Name="GetGamePlayerTable_Result" />
+  <ComplexType Name="GetGameTable_Result" />
+  <ComplexType Name="GetObjectList_Result" />
+  <ComplexType Name="GetOnlinePlayers_Result" />
+  <ComplexType Name="GetPlayerTable_Result" />
+  <ComplexType Name="GetTop10HighScores_Result" />
+  <EntityType Name="GamePlayerStat">
+    <Key>
+      <PropertyRef Name="gameid" />
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="gameid" Type="Int32" Nullable="false" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="char_name" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="xypoint" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="score" Type="Int32" />
+  </EntityType>
+</Schema>
