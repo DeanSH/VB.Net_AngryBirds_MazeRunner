@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ee593bf6855c4bfb9737127165e1660e" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="angrybirds3Model.character" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.game" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.gameobject" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.gameplayer" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.map" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.object" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.player" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.ActiveGame" Width="1.5" PointX="7.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.MapName" Width="1.5" PointX="7.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.OnlinePlayer" Width="1.5" PointX="7.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="angrybirds3Model.Top10" Width="1.5" PointX="9.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="angrybirds3Model.gameplayer_ibfk_3" ManuallyRouted="false" />
+        <AssociationConnector Association="angrybirds3Model.game_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="angrybirds3Model.gameobject_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="angrybirds3Model.gameplayer_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="angrybirds3Model.gameobject_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="angrybirds3Model.gameplayer_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="angrybirds3Model.map_ibfk_1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="angrybirds3Model.GamePlayerStat" Width="1.5" PointX="7.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

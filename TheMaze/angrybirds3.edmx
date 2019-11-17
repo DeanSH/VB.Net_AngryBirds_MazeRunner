@@ -1,0 +1,950 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="angrybirds3Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="character">
+          <Key>
+            <PropertyRef Name="char_id" />
+          </Key>
+          <Property Name="char_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="char_name" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="game">
+          <Key>
+            <PropertyRef Name="gameid" />
+          </Key>
+          <Property Name="gameid" Type="int" Nullable="false" />
+          <Property Name="mapname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="layout" Type="varchar" MaxLength="840" Nullable="false" />
+        </EntityType>
+        <EntityType Name="gameobject">
+          <Key>
+            <PropertyRef Name="gameid" />
+            <PropertyRef Name="obj_id" />
+          </Key>
+          <Property Name="gameid" Type="int" Nullable="false" />
+          <Property Name="obj_id" Type="int" Nullable="false" />
+          <Property Name="obj_xy" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="gameplayer">
+          <Key>
+            <PropertyRef Name="gameid" />
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="gameid" Type="int" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="char_id" Type="int" Nullable="false" />
+          <Property Name="xypoint" Type="varchar" MaxLength="10" />
+          <Property Name="score" Type="int" />
+        </EntityType>
+        <EntityType Name="map">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="mapname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="layout" Type="varchar" MaxLength="840" Nullable="false" />
+        </EntityType>
+        <EntityType Name="object">
+          <Key>
+            <PropertyRef Name="obj_id" />
+          </Key>
+          <Property Name="obj_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="obj_type" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="player">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="passwrd" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="admin" Type="varchar" MaxLength="1" />
+          <Property Name="attempts" Type="int" />
+          <Property Name="locked" Type="varchar" MaxLength="1" />
+          <Property Name="highscore" Type="int" />
+          <Property Name="isonline" Type="varchar" MaxLength="1" />
+          <Property Name="lastlogin" Type="timestamp" Precision="0" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.Dea25504db.ActiveGames' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ActiveGames">
+          <Key>
+            <PropertyRef Name="HOST" />
+            <PropertyRef Name="MAZE" />
+          </Key>
+          <Property Name="HOST" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MAZE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PLAYERS" Type="bigint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.Dea25504db.GamePlayerStats' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="GamePlayerStats">
+          <Key>
+            <PropertyRef Name="gameid" />
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="gameid" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="char_name" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="xypoint" Type="varchar" MaxLength="10" />
+          <Property Name="score" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.Dea25504db.MapNames' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MapNames">
+          <Key>
+            <PropertyRef Name="MAZE" />
+          </Key>
+          <Property Name="MAZE" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.Dea25504db.OnlinePlayers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="OnlinePlayers">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="highscore" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.Dea25504db.Top10' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Top10">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="highscore" Type="int" />
+        </EntityType>
+        <Association Name="game_ibfk_1">
+          <End Role="player" Type="Self.player" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="game" Type="Self.game" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="player">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="game">
+              <PropertyRef Name="gameid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameobject_ibfk_1">
+          <End Role="game" Type="Self.game" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="gameobject" Type="Self.gameobject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="game">
+              <PropertyRef Name="gameid" />
+            </Principal>
+            <Dependent Role="gameobject">
+              <PropertyRef Name="gameid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameobject_ibfk_2">
+          <End Role="object" Type="Self.object" Multiplicity="1" />
+          <End Role="gameobject" Type="Self.gameobject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="object">
+              <PropertyRef Name="obj_id" />
+            </Principal>
+            <Dependent Role="gameobject">
+              <PropertyRef Name="obj_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameplayer_ibfk_1">
+          <End Role="game" Type="Self.game" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="game">
+              <PropertyRef Name="gameid" />
+            </Principal>
+            <Dependent Role="gameplayer">
+              <PropertyRef Name="gameid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameplayer_ibfk_2">
+          <End Role="player" Type="Self.player" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="player">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="gameplayer">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameplayer_ibfk_3">
+          <End Role="character" Type="Self.character" Multiplicity="1" />
+          <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="character">
+              <PropertyRef Name="char_id" />
+            </Principal>
+            <Dependent Role="gameplayer">
+              <PropertyRef Name="char_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="map_ibfk_1">
+          <End Role="player" Type="Self.player" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="map" Type="Self.map" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="player">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="map">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddGameObject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+          <Parameter Name="pObjID" Type="int" Mode="In" />
+          <Parameter Name="pObjPos" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AddGamePlayer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pCharID" Type="int" Mode="In" />
+          <Parameter Name="pUserPos" Type="varchar" Mode="In" />
+          <Parameter Name="pStartScore" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddGameSession" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pMapName" Type="varchar" Mode="In" />
+          <Parameter Name="pMapLayout" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AddUpdateMap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pMapName" Type="varchar" Mode="In" />
+          <Parameter Name="pMapLayout" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+          <Parameter Name="pUserPass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ChangePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+          <Parameter Name="pNewPass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CheckGameHasPlayers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CheckHighScore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+          <Parameter Name="pScore" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CheckMapNameExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pMapName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CheckOnlineStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeletePlayer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetActiveGames" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="GetCharacterList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="GetGameObjectStats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetGamePlayerStats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetGamePlayerTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="GetGameTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="GetMapNames" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="GetObjectList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="GetOnlinePlayers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="GetPlayerMapInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pMapName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetPlayerTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="GetTop10HighScores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db" />
+        <Function Name="IncreasePlayerScore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LoginUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+          <Parameter Name="pUserPass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="LogoutUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RemoveGame" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RemoveGamePlayer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SetAdminStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+          <Parameter Name="pAdmin" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SetGameObjPosition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+          <Parameter Name="pObjID" Type="int" Mode="In" />
+          <Parameter Name="pObjXY" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SetGamePlayerPosition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserXY" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SetGamePlayerScore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pGameID" Type="int" Mode="In" />
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pScore" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SetLockedStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+          <Parameter Name="pLocked" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateHighScore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Dea25504db">
+          <Parameter Name="pUserID" Type="int" Mode="In" />
+          <Parameter Name="pUserName" Type="varchar" Mode="In" />
+          <Parameter Name="pScore" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="angrybirds3ModelStoreContainer">
+          <EntitySet Name="character" EntityType="Self.character" Schema="Dea25504db" store:Type="Tables" />
+          <EntitySet Name="game" EntityType="Self.game" Schema="Dea25504db" store:Type="Tables" />
+          <EntitySet Name="gameobject" EntityType="Self.gameobject" Schema="Dea25504db" store:Type="Tables" />
+          <EntitySet Name="gameplayer" EntityType="Self.gameplayer" Schema="Dea25504db" store:Type="Tables" />
+          <EntitySet Name="map" EntityType="Self.map" Schema="Dea25504db" store:Type="Tables" />
+          <EntitySet Name="object" EntityType="Self.object" Schema="Dea25504db" store:Type="Tables" />
+          <EntitySet Name="player" EntityType="Self.player" Schema="Dea25504db" store:Type="Tables" />
+          <EntitySet Name="ActiveGames" EntityType="Self.ActiveGames" store:Type="Views" store:Schema="Dea25504db">
+            <DefiningQuery>SELECT
+`ActiveGames`.`HOST`, 
+`ActiveGames`.`MAZE`, 
+`ActiveGames`.`PLAYERS`
+FROM `ActiveGames` AS `ActiveGames`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="GamePlayerStats" EntityType="Self.GamePlayerStats" store:Type="Views" store:Schema="Dea25504db">
+            <DefiningQuery>SELECT
+`GamePlayerStats`.`gameid`, 
+`GamePlayerStats`.`username`, 
+`GamePlayerStats`.`char_name`, 
+`GamePlayerStats`.`xypoint`, 
+`GamePlayerStats`.`score`
+FROM `GamePlayerStats` AS `GamePlayerStats`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MapNames" EntityType="Self.MapNames" store:Type="Views" store:Schema="Dea25504db">
+            <DefiningQuery>SELECT
+`MapNames`.`MAZE`
+FROM `MapNames` AS `MapNames`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OnlinePlayers" EntityType="Self.OnlinePlayers" store:Type="Views" store:Schema="Dea25504db">
+            <DefiningQuery>SELECT
+`OnlinePlayers`.`username`, 
+`OnlinePlayers`.`highscore`
+FROM `OnlinePlayers` AS `OnlinePlayers`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Top10" EntityType="Self.Top10" store:Type="Views" store:Schema="Dea25504db">
+            <DefiningQuery>SELECT
+`Top10`.`username`, 
+`Top10`.`highscore`
+FROM `Top10` AS `Top10`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="game_ibfk_1" Association="Self.game_ibfk_1">
+            <End Role="player" EntitySet="player" />
+            <End Role="game" EntitySet="game" />
+          </AssociationSet>
+          <AssociationSet Name="gameobject_ibfk_1" Association="Self.gameobject_ibfk_1">
+            <End Role="game" EntitySet="game" />
+            <End Role="gameobject" EntitySet="gameobject" />
+          </AssociationSet>
+          <AssociationSet Name="gameobject_ibfk_2" Association="Self.gameobject_ibfk_2">
+            <End Role="object" EntitySet="object" />
+            <End Role="gameobject" EntitySet="gameobject" />
+          </AssociationSet>
+          <AssociationSet Name="gameplayer_ibfk_1" Association="Self.gameplayer_ibfk_1">
+            <End Role="game" EntitySet="game" />
+            <End Role="gameplayer" EntitySet="gameplayer" />
+          </AssociationSet>
+          <AssociationSet Name="gameplayer_ibfk_2" Association="Self.gameplayer_ibfk_2">
+            <End Role="player" EntitySet="player" />
+            <End Role="gameplayer" EntitySet="gameplayer" />
+          </AssociationSet>
+          <AssociationSet Name="gameplayer_ibfk_3" Association="Self.gameplayer_ibfk_3">
+            <End Role="character" EntitySet="character" />
+            <End Role="gameplayer" EntitySet="gameplayer" />
+          </AssociationSet>
+          <AssociationSet Name="map_ibfk_1" Association="Self.map_ibfk_1">
+            <End Role="player" EntitySet="player" />
+            <End Role="map" EntitySet="map" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="angrybirds3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="character">
+          <Key>
+            <PropertyRef Name="char_id" />
+          </Key>
+          <Property Name="char_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="char_name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="gameplayers" Relationship="Self.gameplayer_ibfk_3" FromRole="character" ToRole="gameplayer" />
+        </EntityType>
+        <EntityType Name="game">
+          <Key>
+            <PropertyRef Name="gameid" />
+          </Key>
+          <Property Name="gameid" Type="Int32" Nullable="false" />
+          <Property Name="mapname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="layout" Type="String" MaxLength="840" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="gameobject">
+          <Key>
+            <PropertyRef Name="gameid" />
+            <PropertyRef Name="obj_id" />
+          </Key>
+          <Property Name="gameid" Type="Int32" Nullable="false" />
+          <Property Name="obj_id" Type="Int32" Nullable="false" />
+          <Property Name="obj_xy" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="gameplayer">
+          <Key>
+            <PropertyRef Name="gameid" />
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="gameid" Type="Int32" Nullable="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="char_id" Type="Int32" Nullable="false" />
+          <Property Name="xypoint" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="score" Type="Int32" />
+        </EntityType>
+        <EntityType Name="map">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="mapname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="layout" Type="String" MaxLength="840" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="object">
+          <Key>
+            <PropertyRef Name="obj_id" />
+          </Key>
+          <Property Name="obj_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="obj_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="gameobjects" Relationship="Self.gameobject_ibfk_2" FromRole="object" ToRole="gameobject" />
+        </EntityType>
+        <EntityType Name="player">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passwrd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admin" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="attempts" Type="Int32" />
+          <Property Name="locked" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="highscore" Type="Int32" />
+          <Property Name="isonline" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="lastlogin" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActiveGame">
+          <Key>
+            <PropertyRef Name="HOST" />
+            <PropertyRef Name="MAZE" />
+          </Key>
+          <Property Name="HOST" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MAZE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PLAYERS" Type="Int64" />
+        </EntityType>
+        <EntityType Name="MapName">
+          <Key>
+            <PropertyRef Name="MAZE" />
+          </Key>
+          <Property Name="MAZE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlinePlayer">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="highscore" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Top10">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="highscore" Type="Int32" />
+        </EntityType>
+        <Association Name="gameplayer_ibfk_3">
+          <End Role="character" Type="Self.character" Multiplicity="1" />
+          <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="character">
+              <PropertyRef Name="char_id" />
+            </Principal>
+            <Dependent Role="gameplayer">
+              <PropertyRef Name="char_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="game_ibfk_1">
+          <End Role="player" Type="Self.player" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="game" Type="Self.game" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="player">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="game">
+              <PropertyRef Name="gameid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameobject_ibfk_1">
+          <End Role="game" Type="Self.game" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="gameobject" Type="Self.gameobject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="game">
+              <PropertyRef Name="gameid" />
+            </Principal>
+            <Dependent Role="gameobject">
+              <PropertyRef Name="gameid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameplayer_ibfk_1">
+          <End Role="game" Type="Self.game" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="game">
+              <PropertyRef Name="gameid" />
+            </Principal>
+            <Dependent Role="gameplayer">
+              <PropertyRef Name="gameid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameobject_ibfk_2">
+          <End Role="object" Type="Self.object" Multiplicity="1" />
+          <End Role="gameobject" Type="Self.gameobject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="object">
+              <PropertyRef Name="obj_id" />
+            </Principal>
+            <Dependent Role="gameobject">
+              <PropertyRef Name="obj_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="gameplayer_ibfk_2">
+          <End Role="player" Type="Self.player" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="gameplayer" Type="Self.gameplayer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="player">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="gameplayer">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="map_ibfk_1">
+          <End Role="player" Type="Self.player" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="map" Type="Self.map" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="player">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="map">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="angrybirds3Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="characters" EntityType="Self.character" />
+          <EntitySet Name="games" EntityType="Self.game" />
+          <EntitySet Name="gameobjects" EntityType="Self.gameobject" />
+          <EntitySet Name="gameplayers" EntityType="Self.gameplayer" />
+          <EntitySet Name="maps" EntityType="Self.map" />
+          <EntitySet Name="objects" EntityType="Self.object" />
+          <EntitySet Name="players" EntityType="Self.player" />
+          <EntitySet Name="ActiveGames" EntityType="Self.ActiveGame" />
+          <EntitySet Name="MapNames" EntityType="Self.MapName" />
+          <EntitySet Name="OnlinePlayers" EntityType="Self.OnlinePlayer" />
+          <EntitySet Name="Top10" EntityType="Self.Top10" />
+          <AssociationSet Name="gameplayer_ibfk_3" Association="Self.gameplayer_ibfk_3">
+            <End Role="character" EntitySet="characters" />
+            <End Role="gameplayer" EntitySet="gameplayers" />
+          </AssociationSet>
+          <AssociationSet Name="game_ibfk_1" Association="Self.game_ibfk_1">
+            <End Role="player" EntitySet="players" />
+            <End Role="game" EntitySet="games" />
+          </AssociationSet>
+          <AssociationSet Name="gameobject_ibfk_1" Association="Self.gameobject_ibfk_1">
+            <End Role="game" EntitySet="games" />
+            <End Role="gameobject" EntitySet="gameobjects" />
+          </AssociationSet>
+          <AssociationSet Name="gameplayer_ibfk_1" Association="Self.gameplayer_ibfk_1">
+            <End Role="game" EntitySet="games" />
+            <End Role="gameplayer" EntitySet="gameplayers" />
+          </AssociationSet>
+          <AssociationSet Name="gameobject_ibfk_2" Association="Self.gameobject_ibfk_2">
+            <End Role="object" EntitySet="objects" />
+            <End Role="gameobject" EntitySet="gameobjects" />
+          </AssociationSet>
+          <AssociationSet Name="gameplayer_ibfk_2" Association="Self.gameplayer_ibfk_2">
+            <End Role="player" EntitySet="players" />
+            <End Role="gameplayer" EntitySet="gameplayers" />
+          </AssociationSet>
+          <AssociationSet Name="map_ibfk_1" Association="Self.map_ibfk_1">
+            <End Role="player" EntitySet="players" />
+            <End Role="map" EntitySet="maps" />
+          </AssociationSet>
+          <FunctionImport Name="AddGameObject" ReturnType="Collection(String)">
+            <Parameter Name="pGameID" Mode="In" Type="Int32" />
+            <Parameter Name="pObjID" Mode="In" Type="Int32" />
+            <Parameter Name="pObjPos" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddGamePlayer" ReturnType="Collection(String)">
+            <Parameter Name="pGameID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pCharID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserPos" Mode="In" Type="String" />
+            <Parameter Name="pStartScore" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddGameSession" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pMapName" Mode="In" Type="String" />
+            <Parameter Name="pMapLayout" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddUpdateMap" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pMapName" Mode="In" Type="String" />
+            <Parameter Name="pMapLayout" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddUser" ReturnType="Collection(String)">
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+            <Parameter Name="pUserPass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ChangePassword" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+            <Parameter Name="pNewPass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CheckGameHasPlayers" ReturnType="Collection(String)">
+          <Parameter Name="pGameID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CheckHighScore" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+            <Parameter Name="pScore" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CheckMapNameExists" ReturnType="Collection(String)">
+          <Parameter Name="pMapName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CheckOnlineStatus" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeletePlayer" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetActiveGames" EntitySet="ActiveGames" ReturnType="Collection(angrybirds3Model.ActiveGame)" />
+          <FunctionImport Name="GetCharacterList" EntitySet="characters" ReturnType="Collection(angrybirds3Model.character)" />
+          <FunctionImport Name="GetGameObjectStats" EntitySet="gameobjects" ReturnType="Collection(angrybirds3Model.gameobject)">
+          <Parameter Name="pGameID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetGamePlayerStats" EntitySet="GamePlayerStats" ReturnType="Collection(angrybirds3Model.GamePlayerStat)">
+          <Parameter Name="pGameID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetGamePlayerTable" EntitySet="gameplayers" ReturnType="Collection(angrybirds3Model.gameplayer)" />
+          <FunctionImport Name="GetGameTable" EntitySet="games" ReturnType="Collection(angrybirds3Model.game)" />
+          <FunctionImport Name="GetMapNames" EntitySet="MapNames" ReturnType="Collection(angrybirds3Model.MapName)" />
+          <FunctionImport Name="GetObjectList" EntitySet="objects" ReturnType="Collection(angrybirds3Model.object)" />
+          <FunctionImport Name="GetOnlinePlayers" EntitySet="OnlinePlayers" ReturnType="Collection(angrybirds3Model.OnlinePlayer)" />
+          <FunctionImport Name="GetPlayerMapInfo" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pMapName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetPlayerTable" EntitySet="players" ReturnType="Collection(angrybirds3Model.player)" />
+          <FunctionImport Name="GetTop10HighScores" EntitySet="Top10" ReturnType="Collection(angrybirds3Model.Top10)" />
+          <FunctionImport Name="IncreasePlayerScore" ReturnType="Collection(String)">
+            <Parameter Name="pGameID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LoginUser" ReturnType="Collection(String)">
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+            <Parameter Name="pUserPass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="LogoutUser" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RemoveGame" ReturnType="Collection(String)">
+          <Parameter Name="pGameID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RemoveGamePlayer" ReturnType="Collection(String)">
+          <Parameter Name="pUserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SetAdminStatus" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+            <Parameter Name="pAdmin" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetGameObjPosition" ReturnType="Collection(String)">
+            <Parameter Name="pGameID" Mode="In" Type="Int32" />
+            <Parameter Name="pObjID" Mode="In" Type="Int32" />
+            <Parameter Name="pObjXY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetGamePlayerPosition" EntitySet="GamePlayerStats" ReturnType="Collection(angrybirds3Model.GamePlayerStat)">
+            <Parameter Name="pGameID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserXY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetGamePlayerScore" ReturnType="Collection(String)">
+            <Parameter Name="pGameID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pScore" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SetLockedStatus" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+            <Parameter Name="pLocked" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateHighScore" ReturnType="Collection(String)">
+            <Parameter Name="pUserID" Mode="In" Type="Int32" />
+            <Parameter Name="pUserName" Mode="In" Type="String" />
+            <Parameter Name="pScore" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="GamePlayerStats" EntityType="angrybirds3Model.GamePlayerStat" />
+        </EntityContainer>
+        <ComplexType Name="GetActiveGames_Result" />
+        <ComplexType Name="GetCharacterList_Result" />
+        <ComplexType Name="GetGamePlayerStats_Result" />
+        <ComplexType Name="GetGamePlayerTable_Result" />
+        <ComplexType Name="GetGameTable_Result" />
+        <ComplexType Name="GetObjectList_Result" />
+        <ComplexType Name="GetOnlinePlayers_Result" />
+        <ComplexType Name="GetPlayerTable_Result" />
+        <ComplexType Name="GetTop10HighScores_Result" />
+        <EntityType Name="GamePlayerStat">
+          <Key>
+            <PropertyRef Name="gameid" />
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="gameid" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="char_name" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="xypoint" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="score" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="angrybirds3ModelStoreContainer" CdmEntityContainer="angrybirds3Entities">
+          <EntitySetMapping Name="characters">
+            <EntityTypeMapping TypeName="angrybirds3Model.character">
+              <MappingFragment StoreEntitySet="character">
+                <ScalarProperty Name="char_id" ColumnName="char_id" />
+                <ScalarProperty Name="char_name" ColumnName="char_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="games">
+            <EntityTypeMapping TypeName="angrybirds3Model.game">
+              <MappingFragment StoreEntitySet="game">
+                <ScalarProperty Name="gameid" ColumnName="gameid" />
+                <ScalarProperty Name="mapname" ColumnName="mapname" />
+                <ScalarProperty Name="layout" ColumnName="layout" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gameobjects">
+            <EntityTypeMapping TypeName="angrybirds3Model.gameobject">
+              <MappingFragment StoreEntitySet="gameobject">
+                <ScalarProperty Name="gameid" ColumnName="gameid" />
+                <ScalarProperty Name="obj_id" ColumnName="obj_id" />
+                <ScalarProperty Name="obj_xy" ColumnName="obj_xy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gameplayers">
+            <EntityTypeMapping TypeName="angrybirds3Model.gameplayer">
+              <MappingFragment StoreEntitySet="gameplayer">
+                <ScalarProperty Name="gameid" ColumnName="gameid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="char_id" ColumnName="char_id" />
+                <ScalarProperty Name="xypoint" ColumnName="xypoint" />
+                <ScalarProperty Name="score" ColumnName="score" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="maps">
+            <EntityTypeMapping TypeName="angrybirds3Model.map">
+              <MappingFragment StoreEntitySet="map">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="mapname" ColumnName="mapname" />
+                <ScalarProperty Name="layout" ColumnName="layout" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="objects">
+            <EntityTypeMapping TypeName="angrybirds3Model.object">
+              <MappingFragment StoreEntitySet="object">
+                <ScalarProperty Name="obj_id" ColumnName="obj_id" />
+                <ScalarProperty Name="obj_type" ColumnName="obj_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="players">
+            <EntityTypeMapping TypeName="angrybirds3Model.player">
+              <MappingFragment StoreEntitySet="player">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="passwrd" ColumnName="passwrd" />
+                <ScalarProperty Name="admin" ColumnName="admin" />
+                <ScalarProperty Name="attempts" ColumnName="attempts" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="highscore" ColumnName="highscore" />
+                <ScalarProperty Name="isonline" ColumnName="isonline" />
+                <ScalarProperty Name="lastlogin" ColumnName="lastlogin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActiveGames">
+            <EntityTypeMapping TypeName="angrybirds3Model.ActiveGame">
+              <MappingFragment StoreEntitySet="ActiveGames">
+                <ScalarProperty Name="HOST" ColumnName="HOST" />
+                <ScalarProperty Name="MAZE" ColumnName="MAZE" />
+                <ScalarProperty Name="PLAYERS" ColumnName="PLAYERS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MapNames">
+            <EntityTypeMapping TypeName="angrybirds3Model.MapName">
+              <MappingFragment StoreEntitySet="MapNames">
+                <ScalarProperty Name="MAZE" ColumnName="MAZE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlinePlayers">
+            <EntityTypeMapping TypeName="angrybirds3Model.OnlinePlayer">
+              <MappingFragment StoreEntitySet="OnlinePlayers">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="highscore" ColumnName="highscore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Top10">
+            <EntityTypeMapping TypeName="angrybirds3Model.Top10">
+              <MappingFragment StoreEntitySet="Top10">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="highscore" ColumnName="highscore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddGameObject" FunctionName="angrybirds3Model.Store.AddGameObject" />
+          <FunctionImportMapping FunctionImportName="AddGamePlayer" FunctionName="angrybirds3Model.Store.AddGamePlayer" />
+          <FunctionImportMapping FunctionImportName="AddGameSession" FunctionName="angrybirds3Model.Store.AddGameSession" />
+          <FunctionImportMapping FunctionImportName="AddUpdateMap" FunctionName="angrybirds3Model.Store.AddUpdateMap" />
+          <FunctionImportMapping FunctionImportName="AddUser" FunctionName="angrybirds3Model.Store.AddUser" />
+          <FunctionImportMapping FunctionImportName="ChangePassword" FunctionName="angrybirds3Model.Store.ChangePassword" />
+          <FunctionImportMapping FunctionImportName="CheckGameHasPlayers" FunctionName="angrybirds3Model.Store.CheckGameHasPlayers" />
+          <FunctionImportMapping FunctionImportName="CheckHighScore" FunctionName="angrybirds3Model.Store.CheckHighScore" />
+          <FunctionImportMapping FunctionImportName="CheckMapNameExists" FunctionName="angrybirds3Model.Store.CheckMapNameExists" />
+          <FunctionImportMapping FunctionImportName="CheckOnlineStatus" FunctionName="angrybirds3Model.Store.CheckOnlineStatus" />
+          <FunctionImportMapping FunctionImportName="DeletePlayer" FunctionName="angrybirds3Model.Store.DeletePlayer" />
+          <FunctionImportMapping FunctionImportName="GetActiveGames" FunctionName="angrybirds3Model.Store.GetActiveGames" />
+          <FunctionImportMapping FunctionImportName="GetCharacterList" FunctionName="angrybirds3Model.Store.GetCharacterList" />
+          <FunctionImportMapping FunctionImportName="GetGameObjectStats" FunctionName="angrybirds3Model.Store.GetGameObjectStats" />
+          <FunctionImportMapping FunctionImportName="GetGamePlayerStats" FunctionName="angrybirds3Model.Store.GetGamePlayerStats" />
+          <FunctionImportMapping FunctionImportName="GetGamePlayerTable" FunctionName="angrybirds3Model.Store.GetGamePlayerTable" />
+          <FunctionImportMapping FunctionImportName="GetGameTable" FunctionName="angrybirds3Model.Store.GetGameTable" />
+          <FunctionImportMapping FunctionImportName="GetMapNames" FunctionName="angrybirds3Model.Store.GetMapNames" />
+          <FunctionImportMapping FunctionImportName="GetObjectList" FunctionName="angrybirds3Model.Store.GetObjectList" />
+          <FunctionImportMapping FunctionImportName="GetOnlinePlayers" FunctionName="angrybirds3Model.Store.GetOnlinePlayers" />
+          <FunctionImportMapping FunctionImportName="GetPlayerMapInfo" FunctionName="angrybirds3Model.Store.GetPlayerMapInfo" />
+          <FunctionImportMapping FunctionImportName="GetPlayerTable" FunctionName="angrybirds3Model.Store.GetPlayerTable" />
+          <FunctionImportMapping FunctionImportName="GetTop10HighScores" FunctionName="angrybirds3Model.Store.GetTop10HighScores" />
+          <FunctionImportMapping FunctionImportName="IncreasePlayerScore" FunctionName="angrybirds3Model.Store.IncreasePlayerScore" />
+          <FunctionImportMapping FunctionImportName="LoginUser" FunctionName="angrybirds3Model.Store.LoginUser" />
+          <FunctionImportMapping FunctionImportName="LogoutUser" FunctionName="angrybirds3Model.Store.LogoutUser" />
+          <FunctionImportMapping FunctionImportName="RemoveGame" FunctionName="angrybirds3Model.Store.RemoveGame" />
+          <FunctionImportMapping FunctionImportName="RemoveGamePlayer" FunctionName="angrybirds3Model.Store.RemoveGamePlayer" />
+          <FunctionImportMapping FunctionImportName="SetAdminStatus" FunctionName="angrybirds3Model.Store.SetAdminStatus" />
+          <FunctionImportMapping FunctionImportName="SetGameObjPosition" FunctionName="angrybirds3Model.Store.SetGameObjPosition" />
+          <FunctionImportMapping FunctionImportName="SetGamePlayerPosition" FunctionName="angrybirds3Model.Store.SetGamePlayerPosition" />
+          <FunctionImportMapping FunctionImportName="SetGamePlayerScore" FunctionName="angrybirds3Model.Store.SetGamePlayerScore" />
+          <FunctionImportMapping FunctionImportName="SetLockedStatus" FunctionName="angrybirds3Model.Store.SetLockedStatus" />
+          <FunctionImportMapping FunctionImportName="UpdateHighScore" FunctionName="angrybirds3Model.Store.UpdateHighScore" />
+          <EntitySetMapping Name="GamePlayerStats">
+            <EntityTypeMapping TypeName="angrybirds3Model.GamePlayerStat">
+              <MappingFragment StoreEntitySet="GamePlayerStats">
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="xypoint" ColumnName="xypoint" />
+                <ScalarProperty Name="char_name" ColumnName="char_name" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="gameid" ColumnName="gameid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
